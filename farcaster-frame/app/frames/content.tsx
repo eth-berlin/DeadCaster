@@ -73,6 +73,64 @@ export default function getFramesContent(page: number, summary?: object): any {
       }
     }
 
+    case 2: {
+      return {
+        image: images[page]!,
+        imageOptions: {
+          aspectRatio: "1:1",
+        },
+        buttons: [
+          <Button
+            action="post"
+            target={{
+              pathname: "/",
+              query: {
+                pageIndex: String(page + 1),
+                op: "bounty_0_001_eth",
+              },
+            }}
+          >
+            0.001 ETH
+          </Button>,
+          <Button
+            action="post"
+            target={{
+              pathname: "/",
+              query: {
+                pageIndex: String(page + 1),
+                op: "bounty_0_01_eth",
+              },
+            }}
+          >
+            0.01 ETH
+          </Button>,
+        ],
+      }
+    }
+
+    case 3: {
+      return {
+        image: images[page]!,
+        imageOptions: {
+          aspectRatio: "1:1",
+        },
+        buttons: [
+          <Button
+            action="post"
+            target={{
+              pathname: "/",
+              query: {
+                pageIndex: String(page + 1),
+                op: "cast",
+              },
+            }}
+          >
+            Cast your encrypted secret!
+          </Button>,
+        ],
+      }
+    }
+
     default: {
       return {
         image: <div tw="flex">Oops, how did we end up here?</div>,
