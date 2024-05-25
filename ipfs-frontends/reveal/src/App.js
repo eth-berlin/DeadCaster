@@ -3,6 +3,7 @@ import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 import './App.css';
 import { ethers } from 'ethers';
+import DeadCaster from "./DeadCaster.json"
 
 function App() {
   const [encrypted, setEncrypted] = useState('');
@@ -14,6 +15,10 @@ function App() {
 
   const url = window.location.href;
   const urlWithoutHttps = url.replace('https://', '');
+
+  const requestAccount = async () => {
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+  };
 
   const decryptText = () => {
     const bytes = AES.decrypt(encrypted, secret);
@@ -76,6 +81,19 @@ function App() {
 
   }
 
+  const getMetas = async () => {
+    await requestAccount()
+
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner()
+
+    const Contract = new ethers.Contract(contractAddress, DeadCaster.abi, signer);
+    const contract = await Contract.connect()
+
+    const metas = await contract.getMetas(ethers.toBigInt( 0).toString(), ethers.toBigInt(20).toString());
+    console.log('metas', metas)
+  }
+
 
   return (
     <div className="App">
@@ -86,6 +104,7 @@ function App() {
           <>  <h1>DeadCaster</h1><input type="text" value={encrypted} onChange={e => setEncrypted(e.target.value)} placeholder="Enter encrypted text" />
             <input type="text" value={secret} onChange={e => setSecret(e.target.value)} placeholder="Enter secret" />
             <button onClick={decryptText}>Decrypt * claim bounty</button>
+            <button onClick={getMetas}>Get metas</button>
             <textarea readOnly value={decrypted} /></>
 
         ) : (
