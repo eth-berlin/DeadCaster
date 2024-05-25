@@ -67,10 +67,10 @@ const frameHandler = frames(async (ctx: any) => {
     const iface = new ethers.Interface(DeadCaster.abi)
 
     const args = [
-      ctx.state.longevity,
+      BigInt(ctx.state.longevity),
       Buffer.from(ctx.state.secret),
       "AES", // for now hardcoded as ipfs deployed sites use it
-      ctx.state.requesterFid,
+      BigInt(requesterFid),
     ]
 
     const calldata = iface.encodeFunctionData("createSecret", args)
