@@ -6,6 +6,8 @@ export const images = [
   "https://i.imgur.com/sY4OTeE.png",
   "https://i.imgur.com/xwNd28z.png",
   "https://i.imgur.com/l5TffK4.png",
+  "https://i.imgur.com/SJINX7A.png",
+  "https://i.imgur.com/jox2Gj2.png",
 ]
 
 export default function getFramesContent(page: number, summary?: object): any {
@@ -143,6 +145,82 @@ export default function getFramesContent(page: number, summary?: object): any {
             }}
           >
             Cast your encrypted secret!
+          </Button>,
+        ],
+      }
+    }
+
+    case 4: {
+      return {
+        image: images[page]!,
+        imageOptions: {
+          aspectRatio: "1:1",
+        },
+        buttons: [
+          <Button
+            action="post"
+            target={{
+              pathname: "/",
+              query: {
+                pageIndex: String(page + 1),
+                op: "cast",
+              },
+            }}
+          >
+            Cast encrypted secret
+          </Button>,
+          <Button
+            action="post"
+            target={{
+              pathname: "/",
+              query: {
+                pageIndex: String(page + 1),
+                op: "cast",
+              },
+            }}
+          >
+            Proof `I am alive`
+          </Button>,
+        ],
+      }
+    }
+
+    case 5: {
+      return {
+        image: images[page]!,
+        imageOptions: {
+          aspectRatio: "1:1",
+        },
+        buttons: [
+          <Button action="link" target={"https://warpcast.com/dudeamir.eth"}>
+            dudeamir.eth
+          </Button>,
+          <Button action="link" target={"https://warpcast.com/caruso33"}>
+            caruso33
+          </Button>,
+          <Button
+            action="link"
+            target={{
+              pathname: "/",
+              query: {
+                pageIndex: String(page + 1),
+                op: "cast",
+              },
+            }}
+          >
+            flobrown.eth
+          </Button>,
+          <Button
+            action="link"
+            target={{
+              pathname: "/",
+              query: {
+                pageIndex: String(page + 1),
+                op: "cast",
+              },
+            }}
+          >
+            nyyls.eth
           </Button>,
         ],
       }
