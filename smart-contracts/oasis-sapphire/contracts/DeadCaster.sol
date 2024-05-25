@@ -9,6 +9,7 @@ contract DeadCaster {
         string scheme;
         uint256 fid;
         uint256 bounty;
+        bool bountyPaid;
     }
 
     event SecretCreated(
@@ -23,7 +24,8 @@ contract DeadCaster {
         uint256 index,
         string scheme,
         uint256 indexed fid,
-        uint256 bounty
+        uint256 bounty,
+        bytes secret
     );
 
     SecretMetadata[] public _metas;
@@ -44,7 +46,8 @@ contract DeadCaster {
                 longevity: longevity,
                 scheme: scheme,
                 fid: fid,
-                bounty: msg.value
+                bounty: msg.value,
+                bountyPaid: false
             })
         );
         _secrets.push(secret);
@@ -68,8 +71,16 @@ contract DeadCaster {
             index,
             _metas[index].scheme,
             _metas[index].fid,
-            _metas[index].bounty
+            _metas[index].bounty,
+            _secrets[index]
         );
+
+        if (!_metas[index].bountyPaid) {
+            _metas[index].bountyPaid = true;
+
+            payable(msg.sender).transfer(_metas[index].bounty);
+        }
+
         return _secrets[index];
     }
 
