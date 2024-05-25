@@ -10,7 +10,7 @@ export const images = [
   "https://i.imgur.com/jox2Gj2.png",
 ]
 
-export default function getFramesContent(page: number, summary?: object): any {
+export default function getFramesContent(page: number, state?: object): any {
   switch (page) {
     case 0:
       return {
@@ -24,7 +24,9 @@ export default function getFramesContent(page: number, summary?: object): any {
             action="post"
             target={{
               query: {
+                pathname: "/",
                 pageIndex: String(page + 1),
+                op: "encrypt",
               },
             }}
           >
@@ -34,27 +36,28 @@ export default function getFramesContent(page: number, summary?: object): any {
             action="post"
             target={{
               query: {
+                pathname: "/",
                 pageIndex: String(page + 1),
+                op: "already",
               },
             }}
           >
             I gave my secret already
           </Button>,
-          ,
           <Button
             action="post"
             target={{
               query: {
+                pathname: "/",
                 pageIndex: String(page + 1),
+                op: "check_ bounty",
               },
             }}
           >
             Earn bounty check on Deadcasters
           </Button>,
-          <Button action="tx" target="/txdata" post_url="/frames">
-            Buy a unit
-          </Button>,
         ],
+        state,
       }
 
     case 1: {
@@ -89,6 +92,7 @@ export default function getFramesContent(page: number, summary?: object): any {
             Weekly
           </Button>,
         ],
+        state,
       }
     }
 
@@ -124,6 +128,7 @@ export default function getFramesContent(page: number, summary?: object): any {
             0.01 ETH
           </Button>,
         ],
+        state,
       }
     }
 
@@ -144,9 +149,10 @@ export default function getFramesContent(page: number, summary?: object): any {
               },
             }}
           >
-            Cast your encrypted secret!
+            Activate Deadcaster
           </Button>,
         ],
+        state,
       }
     }
 
@@ -182,6 +188,7 @@ export default function getFramesContent(page: number, summary?: object): any {
             Proof `I am alive`
           </Button>,
         ],
+        state,
       }
     }
 

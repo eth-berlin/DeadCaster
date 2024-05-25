@@ -4,20 +4,26 @@ pragma solidity ^0.8.9;
 contract DeadCaster {
     struct SecretMetadata {
         address creator;
-        string name;
         /// @notice How long (in seconds) the secret should remain so past the creator's last update.
         uint256 longevity;
+        string scheme;
+        uint256 fid;
+        uint256 bounty;
     }
 
     event SecretCreated(
         address indexed creator,
-        string indexed name,
-        uint256 index
+        uint256 index,
+        string scheme,
+        uint256 indexed fid,
+        uint256 bounty
     );
     event SecretRevealed(
         address indexed creator,
-        string indexed name,
-        uint256 index
+        uint256 index,
+        string scheme,
+        uint256 indexed fid,
+        uint256 bounty
     );
 
     SecretMetadata[] public _metas;
@@ -26,20 +32,24 @@ contract DeadCaster {
     mapping(address => uint256) public _lastSeen;
 
     function createSecret(
-        string calldata name,
         uint256 longevity,
-        bytes calldata secret
-    ) external {
+        bytes calldata secret,
+        string calldata scheme,
+        uint256 fid,
+        uint256 bounty
+    ) external payable {
         _updateLastSeen();
         _metas.push(
             SecretMetadata({
                 creator: msg.sender,
-                name: name,
-                longevity: longevity
+                longevity: longevity,
+                scheme: scheme,
+                fid: fid,
+                bounty: msg.value
             })
         );
         _secrets.push(secret);
-        emit SecretCreated(msg.sender, name, _metas.length - 1);
+        emit SecretCreated(msg.sender, _metas.length - 1, scheme, fid, bounty);
     }
 
     /// @notice Reveals the secret at the specified index.
@@ -48,7 +58,13 @@ contract DeadCaster {
         address creator = _metas[index].creator;
         uint256 expiry = _lastSeen[creator] + _metas[index].longevity;
         require(block.timestamp >= expiry, "not expired");
-        emit SecretRevealed(creator, _metas[index].name, index);
+        emit SecretRevealed(
+            creator,
+            index,
+            _metas[index].scheme,
+            _metas[index].fid,
+            _metas[index].bounty
+        );
         return _secrets[index];
     }
 
