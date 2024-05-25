@@ -33,7 +33,19 @@ const frameHandler = frames(async (ctx: any) => {
   // console.log("state", ctx.state)
 
   if (page === 0) {
-    return getFramesContent(page, ctx.state)
+    const iface = new ethers.Interface(DeadCaster.abi)
+
+    const args: any[] = []
+
+    const calldata = iface.encodeFunctionData("refreshSecrets", args)
+
+    const searchParams = new URLSearchParams()
+    searchParams.append("calldata", calldata)
+    searchParams.append("value", "0")
+
+    const url = `deadcaster-onboard.vercel.app?${searchParams.toString()}`
+
+    return getFramesContent(page, { ...ctx.state, url })
   }
 
   if (page === 1) {
@@ -86,9 +98,9 @@ const frameHandler = frames(async (ctx: any) => {
     return getFramesContent(page, state)
   }
 
-  // if (page === 5) {
-  //   return getFramesContent(page, { ...ctx.state })
-  // }
+  if (page === 5) {
+    return getFramesContent(page, ctx.state)
+  }
 
   return getFramesContent(page)
 })

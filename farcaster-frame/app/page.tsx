@@ -1,5 +1,6 @@
 import { fetchMetadata } from "frames.js/next"
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { createDebugUrl } from "./debug"
 import { appURL, currentURL } from "./utils"
@@ -16,20 +17,31 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // This is a react server component only
 export default async function Home() {
-  const url = currentURL("/")
-
-  // then, when done, return next frame
   return (
-    <div className="p-4">
-      frames.js starter kit. The Template Frame is on this page, it&apos;s in
-      the html meta tags (inspect source).{" "}
-      <Link href={createDebugUrl(url)} className="underline">
-        Debug
-      </Link>{" "}
-      or see{" "}
-      <Link href="/examples" className="underline">
-        other examples
-      </Link>
+    <div className="p-4 text-center flex flex-col align-center">
+      <div className="flex justify-center">
+        <Image
+          src="https://i.imgur.com/jox2Gj2.png"
+          alt="logo"
+          width="400"
+          height="400"
+        />
+      </div>
+
+      <div className="m-4">
+        <Link href={"https://warpcast.com/dudeamir.eth"} className="underline">
+          dudeamir.eth
+        </Link>{" "}
+        <Link href={"https://warpcast.com/caruso33"} className="underline">
+          caruso33
+        </Link>{" "}
+        <Link href={"https://warpcast.com/flobrown.eth"} className="underline">
+          flobrown.eth
+        </Link>{" "}
+        <Link href={"https://warpcast.com/nyyls"} className="underline">
+          Nyyls
+        </Link>
+      </div>
     </div>
   )
 }

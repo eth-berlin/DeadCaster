@@ -38,29 +38,20 @@ export default function getFramesContent(page: number, state?: State): any {
           >
             Setup your Deadcast
           </Button>,
-          <Button
-            action="link"
-            target={`${protocolPrefix}deadcaster-reveal.vercel.app`}
-          >
+          <Button action="link" target={`${protocolPrefix}${state?.url!}`}>
             Keep me alive
-          </Button>,
-          <Button
-            action="link"
-            target={`${protocolPrefix}deadcaster-encrypt.vercel.app`}
-          >
-            Claim bounty & reveal secrets
           </Button>,
           <Button
             action="post"
             target={{
               query: {
                 pathname: "/",
-                pageIndex: String(-1),
-                op: "follow",
+                pageIndex: String(5),
+                op: "more",
               },
             }}
           >
-            Follow the Crew
+            More
           </Button>,
         ],
         state,
@@ -178,41 +169,41 @@ export default function getFramesContent(page: number, state?: State): any {
       }
     }
 
-    // case 5: {
-    //   return {
-    //     image: images[page]!,
-    //     imageOptions: {
-    //       aspectRatio: "1:1",
-    //     },
-    //     buttons: [
-    //       <Button
-    //         action="post"
-    //         target={{
-    //           pathname: "/",
-    //           query: {
-    //             pageIndex: String(page + 1),
-    //             op: "cast",
-    //           },
-    //         }}
-    //       >
-    //         Cast encrypted secret
-    //       </Button>,
-    //       <Button
-    //         action="post"
-    //         target={{
-    //           pathname: "/",
-    //           query: {
-    //             pageIndex: String(page + 1),
-    //             op: "cast",
-    //           },
-    //         }}
-    //       >
-    //         Proof `I am alive`
-    //       </Button>,
-    //     ],
-    //     state,
-    //   }
-    // }
+    case 5: {
+      return {
+        image: images[page]!,
+        imageOptions: {
+          aspectRatio: "1:1",
+        },
+        buttons: [
+          <Button
+            action="link"
+            target={`${protocolPrefix}deadcaster-reveal.vercel.app`}
+          >
+            Claim bounty, reveal secrets
+          </Button>,
+          <Button
+            action="link"
+            target={`${protocolPrefix}deadcaster-encrypt.vercel.app`}
+          >
+            Cast encrypted secret
+          </Button>,
+          <Button
+            action="post"
+            target={{
+              query: {
+                pathname: "/",
+                pageIndex: String(-1),
+                op: "follow",
+              },
+            }}
+          >
+            Follow the Crew
+          </Button>,
+        ],
+        state,
+      }
+    }
 
     case -1: {
       return {
