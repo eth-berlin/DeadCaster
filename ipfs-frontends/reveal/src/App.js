@@ -28,6 +28,10 @@ function App() {
 
   // functions
 
+  const requestAccount = async () => {
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+  };
+
   const decryptText = () => {
     const bytes = AES.decrypt(encrypted, secret);
     const originalText = bytes.toString(Utf8);
