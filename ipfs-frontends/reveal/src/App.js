@@ -10,10 +10,22 @@ function App() {
   const [fid, setFID] = useState('');
   const [bounty, setBounty] = useState('');
   const [castJson, setCastJson] = useState('');
+  const [castArray, setCastArray] = useState([]);
   const [decrypted, setDecrypted] = useState('');
 
   const url = window.location.href;
   const urlWithoutHttps = url.replace('https://', '');
+
+  const contractAddress = '0x49C9370e6152F312aefEA19D55AE89f11ca30cf4';
+
+  // The ABI of the smart contract
+  const contractABI = [
+    // Replace with the actual ABI of your smart contract
+    'event SecretRevealed( address indexed creator, uint256 index, string scheme, uint256 indexed fid, uint256 bounty, bytes secret)'
+
+  ];
+
+  // functions
 
   const decryptText = () => {
     const bytes = AES.decrypt(encrypted, secret);
@@ -27,54 +39,82 @@ function App() {
     return data;
   };
 
-  const contractAddress = '0x49C9370e6152F312aefEA19D55AE89f11ca30cf4';
-
-  // The ABI of the smart contract
-  const contractABI = [
-    // Replace with the actual ABI of your smart contract
-    'event SecretRevealed( address indexed creator, uint256 index, string scheme, uint256 indexed fid, uint256 bounty, bytes secret)'
-  ];
+  // const listenForSecretRevealedEvent = async () => {
+  //   // Initialize the provider
 
 
-  const listenForSecretRevealedEvent = async () => {
-    // Initialize the provider
+  //   const provider = new ethers.BrowserProvider(window.ethereum);
+
+  //   // Create a new contract instance
+  //   const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+  //   // Listen for the "secretRevealed" event
+  //   contract.on('SecretRevealed', (creator, index, scheme, fid, bounty, secret) => {
+  //     return { secret, fid, bounty };
+  //   }
+  //   );
+  // };
 
 
-    const provider = new ethers.BrowserProvider(window.ethereum);
-
-    // Create a new contract instance
-    const contract = new ethers.Contract(contractAddress, contractABI, provider);
-
-    // Listen for the "secretRevealed" event
-    contract.on('SecretRevealed', (creator, index, scheme, fid, bounty, secret) => {
-      return { secret, fid, bounty };
+  const getTextFromCasts = async (jsonData, secret) => {
+    let textArray = [];
+    if (jsonData.result && jsonData.result.casts) {
+      jsonData.result.casts.forEach(cast => {
+        if (cast.text) {
+          try {
+            const bytes = AES.decrypt(cast.text, secret);
+            const originalText = bytes.toString(Utf8);
+            if (originalText !== '') {
+              textArray.push(originalText);
+            }
+          } catch (error) {
+            console.error('Decryption failed:', error);
+          }
+        }
+      });
     }
-    );
+    return textArray;
+  }
+
+
+  // const revealSecretClaimBounty = async (secret) => {
+  //   // do the function call with ethers
+  //   const provider = new ethers.BrowserProvider(window.ethereum);
+
+  //   const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+  //   // Call the "revealSecret" function
+  //   await contract.revealSecret(index);
+
+  //   listenForSecretRevealedEvent().then(({ secret, fid, bounty }) => {
+  //     setSecret(secret);
+  //     fetchWarpCasterCasts(fid).then((data) => {
+  //       setCastJson(data);
+  //       getTextFromCasts(data, secret).then((texts) => {
+  //         setCastArray(texts);
+  //       });
+  //     }
+  //     );
+  //   }
+  //   );
+
+
+  // }
+
+
+  const testgetText = async (secret, fid) => {
+    fetchWarpCasterCasts(fid).then((data) => {
+      setCastJson(data);
+      console.log(data);
+      getTextFromCasts(data, secret).then((texts) => {
+        setCastArray(texts);
+        console.log(texts);
+      });
+    });
   };
 
 
-  const revealSecretClaimBounty = async (secret) => {
-    // do the function call with ethers
-    const provider = new ethers.BrowserProvider(window.ethereum);
 
-    const contract = new ethers.Contract(contractAddress, contractABI, provider);
-
-    // Call the "revealSecret" function
-    await contract.revealSecret(secret);
-
-    listenForSecretRevealedEvent().then(({ secret, fid, bounty }) => {
-      setSecret(secret);
-      setFID(fid);
-      setBounty(bounty);
-      fetchWarpCasterCasts(fid).then((data) => {
-        setCastJson(data);
-      }
-      );
-    }
-    );
-
-
-  }
 
 
   return (
@@ -83,10 +123,19 @@ function App() {
 
 
         {(typeof window.ethereum !== 'undefined') ? (
-          <>  <h1>DeadCaster</h1><input type="text" value={encrypted} onChange={e => setEncrypted(e.target.value)} placeholder="Enter encrypted text" />
+          <>  <h1>DeadCaster</h1>
+
+            {/* <input type="text" value={encrypted} onChange={e => setEncrypted(e.target.value)} placeholder="Enter encrypted text" /> */}
             <input type="text" value={secret} onChange={e => setSecret(e.target.value)} placeholder="Enter secret" />
-            <button onClick={decryptText}>Decrypt * claim bounty</button>
-            <textarea readOnly value={decrypted} /></>
+            <input type="text" value={fid} onChange={e => setFID(e.target.value)} placeholder="Enter FID" />
+
+            <button onClick={() => { testgetText(secret, fid) }}>Get decrypted casts</button>
+            <ul>
+              {castArray.map((cast, index) => (
+                <li key={index}>{cast}</li>
+              ))}
+            </ul>
+          </>
 
         ) : (
 
