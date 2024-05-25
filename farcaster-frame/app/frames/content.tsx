@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-key */
 import { Button } from "frames.js/next"
 import { State } from "./frames"
+import { isMobile } from "react-device-detect"
 
 export const images = [
   "https://i.imgur.com/6Q8A9Tc.png",
+  "https://i.imgur.com/vFm38ez.png",
   "https://i.imgur.com/sY4OTeE.png",
   "https://i.imgur.com/xwNd28z.png",
   "https://i.imgur.com/l5TffK4.png",
@@ -12,8 +14,59 @@ export const images = [
 ]
 
 export default function getFramesContent(page: number, state?: State): any {
+  const protocolPrefix = isMobile
+    ? "https://metamask.app.link/dapp/"
+    : "https://"
+
   switch (page) {
     case 0:
+      return {
+        image: images[page]!,
+        imageOptions: {
+          aspectRatio: "1:1",
+        },
+        buttons: [
+          <Button
+            action="post"
+            target={{
+              query: {
+                pathname: "/",
+                pageIndex: String(page + 1),
+                op: "setup",
+              },
+            }}
+          >
+            Setup your Deadcast
+          </Button>,
+          <Button
+            action="link"
+            target={`${protocolPrefix}deadcaster-reveal.vercel.app`}
+          >
+            Keep me alive
+          </Button>,
+          <Button
+            action="link"
+            target={`${protocolPrefix}deadcaster-encrypt.vercel.app`}
+          >
+            Claim bounty & reveal secrets
+          </Button>,
+          <Button
+            action="post"
+            target={{
+              query: {
+                pathname: "/",
+                pageIndex: String(-1),
+                op: "follow",
+              },
+            }}
+          >
+            Follow the Crew
+          </Button>,
+        ],
+        state,
+      }
+
+    case 1: {
       return {
         image: images[page]!,
         imageOptions: {
@@ -24,44 +77,21 @@ export default function getFramesContent(page: number, state?: State): any {
           <Button
             action="post"
             target={{
+              pathname: "/",
               query: {
-                pathname: "/",
                 pageIndex: String(page + 1),
-                op: "encrypt",
+                op: "secret",
               },
             }}
           >
-            Encrypt Secret
-          </Button>,
-          <Button
-            action="post"
-            target={{
-              query: {
-                pathname: "/",
-                pageIndex: String(page + 1),
-                op: "already",
-              },
-            }}
-          >
-            I gave my secret already
-          </Button>,
-          <Button
-            action="post"
-            target={{
-              query: {
-                pathname: "/",
-                pageIndex: String(page + 1),
-                op: "check_ bounty",
-              },
-            }}
-          >
-            Earn bounty check on Deadcasters
+            Setup your secret
           </Button>,
         ],
         state,
       }
+    }
 
-    case 1: {
+    case 2: {
       return {
         image: images[page]!,
         imageOptions: {
@@ -97,7 +127,7 @@ export default function getFramesContent(page: number, state?: State): any {
       }
     }
 
-    case 2: {
+    case 3: {
       return {
         image: images[page]!,
         imageOptions: {
@@ -133,21 +163,6 @@ export default function getFramesContent(page: number, state?: State): any {
       }
     }
 
-    case 3: {
-      return {
-        image: images[page]!,
-        imageOptions: {
-          aspectRatio: "1:1",
-        },
-        buttons: [
-          <Button action="link" target={state?.url!}>
-            Activate Deadcaster
-          </Button>,
-        ],
-        state,
-      }
-    }
-
     case 4: {
       return {
         image: images[page]!,
@@ -155,38 +170,53 @@ export default function getFramesContent(page: number, state?: State): any {
           aspectRatio: "1:1",
         },
         buttons: [
-          <Button
-            action="post"
-            target={{
-              pathname: "/",
-              query: {
-                pageIndex: String(page + 1),
-                op: "cast",
-              },
-            }}
-          >
-            Cast encrypted secret
-          </Button>,
-          <Button
-            action="post"
-            target={{
-              pathname: "/",
-              query: {
-                pageIndex: String(page + 1),
-                op: "cast",
-              },
-            }}
-          >
-            Proof `I am alive`
+          <Button action="link" target={`${protocolPrefix}${state?.url!}`}>
+            Activate Deadcaster
           </Button>,
         ],
         state,
       }
     }
 
-    case 5: {
+    // case 5: {
+    //   return {
+    //     image: images[page]!,
+    //     imageOptions: {
+    //       aspectRatio: "1:1",
+    //     },
+    //     buttons: [
+    //       <Button
+    //         action="post"
+    //         target={{
+    //           pathname: "/",
+    //           query: {
+    //             pageIndex: String(page + 1),
+    //             op: "cast",
+    //           },
+    //         }}
+    //       >
+    //         Cast encrypted secret
+    //       </Button>,
+    //       <Button
+    //         action="post"
+    //         target={{
+    //           pathname: "/",
+    //           query: {
+    //             pageIndex: String(page + 1),
+    //             op: "cast",
+    //           },
+    //         }}
+    //       >
+    //         Proof `I am alive`
+    //       </Button>,
+    //     ],
+    //     state,
+    //   }
+    // }
+
+    case -1: {
       return {
-        image: images[page]!,
+        image: images.slice(-1)[0]!,
         imageOptions: {
           aspectRatio: "1:1",
         },

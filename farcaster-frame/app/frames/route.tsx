@@ -2,24 +2,23 @@
 import { frames } from "./frames"
 import { appURL } from "../utils"
 import getFramesContent from "./content"
-import { encodeFunctionData, parseEther } from "viem"
 import DeadCaster from "../../public/DeadCaster.json"
 import { ethers } from "ethers"
 
 const frameHandler = frames(async (ctx: any) => {
   const page = Number(ctx.searchParams?.pageIndex ?? 0)
   const op = ctx.searchParams?.op
-  const requesterFid = ctx.message?.requesterFid
   const inputText = ctx.message?.inputText
+  const requesterFid = ctx.message?.requesterFid
 
-  const iface = new ethers.Interface(DeadCaster.abi)
+  // const iface = new ethers.Interface(DeadCaster.abi)
 
-  const args = [
-    30,
-    Buffer.from("secret"),
-    "AES", // for now hardcoded
-    3,
-  ]
+  // const args = [
+  //   30,
+  //   Buffer.from("secret"),
+  //   "AES", // for now hardcoded
+  //   3,
+  // ]
 
   // const calldata = encodeFunctionData({
   //   abi: DeadCaster.abi,
@@ -38,12 +37,16 @@ const frameHandler = frames(async (ctx: any) => {
   }
 
   if (page === 1) {
+    return getFramesContent(page, ctx.state)
+  }
+
+  if (page === 2) {
     const state = { ...ctx.state, secret: inputText }
 
     return getFramesContent(page, state)
   }
 
-  if (page === 2) {
+  if (page === 3) {
     const state = {
       ...ctx.state,
       longevity:
@@ -53,7 +56,7 @@ const frameHandler = frames(async (ctx: any) => {
     return getFramesContent(page, state)
   }
 
-  if (page === 3) {
+  if (page === 4) {
     const bounty =
       op === "bounty_0_001_eth"
         ? "0.001"
@@ -64,10 +67,10 @@ const frameHandler = frames(async (ctx: any) => {
     const iface = new ethers.Interface(DeadCaster.abi)
 
     const args = [
-      30,
-      Buffer.from("secret"),
-      "AES", // for now hardcoded
-      3,
+      ctx.state.longevity,
+      Buffer.from(ctx.state.secret),
+      "AES", // for now hardcoded as ipfs deployed sites use it
+      ctx.state.requesterFid,
     ]
 
     const calldata = iface.encodeFunctionData("createSecret", args)
@@ -76,20 +79,16 @@ const frameHandler = frames(async (ctx: any) => {
     searchParams.append("calldata", calldata)
     searchParams.append("value", bounty)
 
-    const url = `${
-      process.env.NEXT_PUBLIC_FARCASTER_BACKEND_URL
-    }?${searchParams.toString()}`
+    const url = `deadcaster-onboard.vercel.app?${searchParams.toString()}`
 
     const state = { ...ctx.state, bounty, url }
-
-    console.log("state", state)
 
     return getFramesContent(page, state)
   }
 
-  if (page === 4) {
-    return getFramesContent(page, { ...ctx.state })
-  }
+  // if (page === 5) {
+  //   return getFramesContent(page, { ...ctx.state })
+  // }
 
   return getFramesContent(page)
 })
