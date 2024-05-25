@@ -1,6 +1,8 @@
 import React from 'react';
 import { ethers } from 'ethers';
 import './App.css';
+import * as sapphire from '@oasisprotocol/sapphire-paratime';
+
 
 function App() {
   const requestAccount = async () => {
@@ -35,20 +37,20 @@ function App() {
 
       await requestAccount();
 
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = provider.getSigner();
-      console.log(signer);
+      const signer = sapphire.wrap(
+        new ethers.providers.Web3Provider(window.ethereum).getSigner(),
+      );
 
       const transaction = {
         to: contractAddress,
-        value: ethers.parseEther(value),
+        value: ethers.utils.parseEther(value),
         data: calldata,
       };
-      (await signer).populateTransaction(transaction);
-      (await signer).sendTransaction(transaction);
+      await signer.sendTransaction(transaction);
     } else {
-      console.log('Ethereum wallet not detected');
+      console.log('Wallet not found');
     }
+
   };
 
   return (
