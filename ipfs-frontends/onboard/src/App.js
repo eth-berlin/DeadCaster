@@ -14,6 +14,8 @@ function App() {
   const urlParams = new URLSearchParams(window.location.search);
   const value = urlParams.get('value');
   const calldata = urlParams.get('calldata');
+  const url = window.location.href;
+  const urlWithoutHttps = url.replace('https://', '');
 
 
 
@@ -47,6 +49,9 @@ function App() {
         data: calldata,
       };
       await signer.sendTransaction(transaction);
+
+
+
     } else {
       console.log('Wallet not found');
     }
@@ -56,10 +61,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>DeadCaster</h1>
-        <button onClick={sendTransaction}>Create secret & activate switch</button>
+        {(typeof window.ethereum !== 'undefined') ? (
+          <><h1>DeadCaster</h1><button onClick={sendTransaction}>Execute transaction</button><br /></>
+
+        ) : (
+
+          <><h4>You are on mobile?</h4><button><a href={`dapp://${urlWithoutHttps}`}> Click here</a></button></>
+        )}
       </header>
-    </div>
+    </div >
   );
 }
 
