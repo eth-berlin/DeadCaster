@@ -49,6 +49,9 @@ export default function getFramesContent(page: number, summary?: object): any {
           >
             Earn bounty check on Deadcasters
           </Button>,
+          <Button action="tx" target="/txdata" post_url="/frames">
+            Buy a unit
+          </Button>,
         ],
       }
 

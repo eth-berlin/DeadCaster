@@ -1740,10 +1740,10 @@ fraction.js@^4.3.7:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.3.7.tgz#06ca0085157e42fda7f9e726e79fefc4068840f7"
   integrity sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==
 
-frames.js@^0.15.3:
-  version "0.15.3"
-  resolved "https://registry.yarnpkg.com/frames.js/-/frames.js-0.15.3.tgz#cb75c6038d66ef6c633edfdfed205060bcbd5c6a"
-  integrity sha512-u6y+VjX0sSD5QsP0iu8eLsK25kpRPQvhFEKUZjriXJCSLxYazecDESNrZcecmp0nXHvFlNOqMEt6eU45H0tHoA==
+frames.js@^0.16.2:
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/frames.js/-/frames.js-0.16.2.tgz#a950c213c22e990d7e3132073821a4727abae423"
+  integrity sha512-Dwb/xif7qVh9iVkBnnQdCJXXpjGDIvhLaQYLGE/ZnMwPtyA211dEW0I/GJP8hLDZIJ9j5uEzJhyqLyyzEOPDAg==
   dependencies:
     "@vercel/og" "^0.6.2"
     cheerio "^1.0.0-rc.12"
@@ -3485,6 +3485,20 @@ viem@2.7.15:
     "@scure/bip39" "1.2.1"
     abitype "1.0.0"
     isows "1.0.3"
+    ws "8.13.0"
+
+viem@^2.12.1:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-2.12.1.tgz#895b73501582376b955f00e5ecafcf51d9d89ffb"
+  integrity sha512-71gxcGCXdNXQuBhpqXblVRH1F3hP/wONCptVOCW4r6VrCEXL/9vfNyCdQKtK/0WGyXm04Zs9Jf/AOAxKqf6FmQ==
+  dependencies:
+    "@adraffy/ens-normalize" "1.10.0"
+    "@noble/curves" "1.2.0"
+    "@noble/hashes" "1.3.2"
+    "@scure/bip32" "1.3.2"
+    "@scure/bip39" "1.2.1"
+    abitype "1.0.0"
+    isows "1.0.4"
     ws "8.13.0"
 
 viem@^2.7.14, viem@^2.7.8:
