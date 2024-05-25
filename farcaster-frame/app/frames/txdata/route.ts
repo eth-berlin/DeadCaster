@@ -29,7 +29,7 @@ export const POST = frames(async (ctx) => {
 
   const oasisAddress = "0x5f588FF374D788470af75A55253FD6488Ea9c90e"
   const scrollAddress = "0x2A123CAb6eb46A22ad1FeBF5a73F7832601775ad"
-  const contractAddress = oasisAddress
+  const contractAddress = scrollAddress
 
   const deadCasterContract = getContract({
     address: contractAddress,

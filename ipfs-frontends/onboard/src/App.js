@@ -7,18 +7,38 @@ function App() {
     await window.ethereum.request({ method: 'eth_requestAccounts' });
   };
 
-  const contractAddress = '0x131CF758d9EF6bcA88928442DC715c8Fdc113952';
+  const contractAddress = '0x2a4354eC095502B77822065d646931d39c40552d';
 
   const urlParams = new URLSearchParams(window.location.search);
   const value = urlParams.get('value');
   const calldata = urlParams.get('calldata');
 
+
+
   const sendTransaction = async () => {
     if (typeof window.ethereum !== 'undefined') {
+
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [{
+          chainId: "0x5aff",
+          rpcUrls: ["https://testnet.sapphire.oasis.io"],
+          chainName: "Oasis Testnet",
+          nativeCurrency: {
+            name: "TEST",
+            symbol: "TEST",
+            decimals: 18
+          },
+          blockExplorerUrls: ["https://explorer.oasis.io/testnet/sapphire"]
+        }]
+      });
+
       await requestAccount();
+
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = provider.getSigner();
       console.log(signer);
+
       const transaction = {
         to: contractAddress,
         value: ethers.parseEther(value),
