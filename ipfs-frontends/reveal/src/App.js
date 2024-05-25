@@ -3,6 +3,7 @@ import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 import './App.css';
 import { ethers } from 'ethers';
+import DeadCaster from "./DeadCaster.json"
 
 function App() {
   const [encrypted, setEncrypted] = useState('');
@@ -115,6 +116,19 @@ function App() {
 
 
 
+
+  const getMetas = async () => {
+    await requestAccount()
+
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner()
+
+    const Contract = new ethers.Contract(contractAddress, DeadCaster.abi, signer);
+    const contract = await Contract.connect()
+
+    const metas = await contract.getMetas(ethers.toBigInt(0).toString(), ethers.toBigInt(20).toString());
+    console.log('metas', metas)
+  }
 
 
   return (
