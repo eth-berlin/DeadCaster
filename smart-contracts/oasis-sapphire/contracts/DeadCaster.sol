@@ -35,8 +35,7 @@ contract DeadCaster {
         uint256 longevity,
         bytes calldata secret,
         string calldata scheme,
-        uint256 fid,
-        uint256 bounty
+        uint256 fid
     ) external payable {
         _updateLastSeen();
         _metas.push(
@@ -49,7 +48,13 @@ contract DeadCaster {
             })
         );
         _secrets.push(secret);
-        emit SecretCreated(msg.sender, _metas.length - 1, scheme, fid, bounty);
+        emit SecretCreated(
+            msg.sender,
+            _metas.length - 1,
+            scheme,
+            fid,
+            msg.value
+        );
     }
 
     /// @notice Reveals the secret at the specified index.
