@@ -1,7 +1,12 @@
 /* eslint-disable react/jsx-key */
 import { Button } from "frames.js/next"
 
-export const images = []
+export const images = [
+  "https://i.imgur.com/6Q8A9Tc.png",
+  "https://i.imgur.com/sY4OTeE.png",
+  "https://i.imgur.com/xwNd28z.png",
+  "https://i.imgur.com/l5TffK4.png",
+]
 
 export default function getFramesContent(page: number, summary?: object): any {
   switch (page) {
@@ -23,6 +28,27 @@ export default function getFramesContent(page: number, summary?: object): any {
           >
             Encrypt Secret
           </Button>,
+          <Button
+            action="post"
+            target={{
+              query: {
+                pageIndex: String(page + 1),
+              },
+            }}
+          >
+            I gave my secret already
+          </Button>,
+          ,
+          <Button
+            action="post"
+            target={{
+              query: {
+                pageIndex: String(page + 1),
+              },
+            }}
+          >
+            Earn bounty check on Deadcasters
+          </Button>,
         ],
       }
 
@@ -43,7 +69,7 @@ export default function getFramesContent(page: number, summary?: object): any {
               },
             }}
           >
-            10 seconds
+            10 seconds (Demo)
           </Button>,
           <Button
             action="post"
@@ -51,23 +77,11 @@ export default function getFramesContent(page: number, summary?: object): any {
               pathname: "/",
               query: {
                 pageIndex: String(page + 1),
-                op: "time_1_minute",
+                op: "time_weekly",
               },
             }}
           >
-            1 Minute
-          </Button>,
-          <Button
-            action="post"
-            target={{
-              pathname: "/",
-              query: {
-                pageIndex: String(page + 1),
-                op: "time_1_hour",
-              },
-            }}
-          >
-            1 Hour
+            Weekly
           </Button>,
         ],
       }
