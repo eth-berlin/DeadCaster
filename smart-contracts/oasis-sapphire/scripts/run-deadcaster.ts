@@ -8,9 +8,11 @@ async function main() {
   console.log('DeadCaster deployed to:', await deadCaster.getAddress());
 
   const tx = await deadCaster.createSecret(
-    'ingredient',
+    // 'ingredient',
     30 /* seconds */,
     Buffer.from('brussels sprouts'),
+    'AES',
+    3,
   );
   console.log('Storing a secret in', tx.hash);
   await tx.wait();

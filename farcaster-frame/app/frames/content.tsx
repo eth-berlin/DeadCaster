@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { Button } from "frames.js/next"
+import { State } from "./frames"
 
 export const images = [
   "https://i.imgur.com/6Q8A9Tc.png",
@@ -10,7 +11,7 @@ export const images = [
   "https://i.imgur.com/jox2Gj2.png",
 ]
 
-export default function getFramesContent(page: number, state?: object): any {
+export default function getFramesContent(page: number, state?: State): any {
   switch (page) {
     case 0:
       return {
@@ -139,16 +140,7 @@ export default function getFramesContent(page: number, state?: object): any {
           aspectRatio: "1:1",
         },
         buttons: [
-          <Button
-            action="post"
-            target={{
-              pathname: "/",
-              query: {
-                pageIndex: String(page + 1),
-                op: "cast",
-              },
-            }}
-          >
+          <Button action="link" target={state?.url!}>
             Activate Deadcaster
           </Button>,
         ],
@@ -205,28 +197,10 @@ export default function getFramesContent(page: number, state?: object): any {
           <Button action="link" target={"https://warpcast.com/caruso33"}>
             caruso33
           </Button>,
-          <Button
-            action="link"
-            target={{
-              pathname: "/",
-              query: {
-                pageIndex: String(page + 1),
-                op: "cast",
-              },
-            }}
-          >
+          <Button action="link" target={"https://warpcast.com/flobrown.eth"}>
             flobrown.eth
           </Button>,
-          <Button
-            action="link"
-            target={{
-              pathname: "/",
-              query: {
-                pageIndex: String(page + 1),
-                op: "cast",
-              },
-            }}
-          >
+          <Button action="link" target={"https://warpcast.com/nyyls"}>
             nyyls.eth
           </Button>,
         ],

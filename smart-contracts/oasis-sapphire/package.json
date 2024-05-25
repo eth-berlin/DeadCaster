@@ -15,6 +15,10 @@
     "@openzeppelin/contracts": "^4.4.2",
     "dotenv": "^16.4.5",
     "ethers": "npm:ethers@^6.6.1",
+<<<<<<< HEAD
+=======
+    "global": "^4.4.0",
+>>>>>>> ae6c417ae99f92bab7c71bd28070fbd06aa6f738
     "hardhat": "^2.22.4",
     "lodash": "^4.17.21",
     "ts-node": "10.8.0",
