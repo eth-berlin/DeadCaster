@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>DeadCaster</h1>
+        <h1>deadcaster</h1>
         <input type="text" value={text} onChange={e => setText(e.target.value)} placeholder="Enter your cast" />
         <input type="text" value={secret} onChange={e => setSecret(e.target.value)} placeholder="Enter your secret" />
         <button onClick={encryptText}>Encrypt</button>

@@ -141,7 +141,7 @@ function App() {
 
 
         {(typeof window.ethereum !== 'undefined') ? (
-          <>  <h1>DeadCaster</h1>
+          <>  <h1>deadcaster</h1>
 
             {/* <input type="text" value={encrypted} onChange={e => setEncrypted(e.target.value)} placeholder="Enter encrypted text" /> */}
             <input type="text" value={secret} onChange={e => setSecret(e.target.value)} placeholder="Enter secret" />

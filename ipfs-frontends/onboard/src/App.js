@@ -62,7 +62,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         {(typeof window.ethereum !== 'undefined') ? (
-          <><h1>DeadCaster</h1><button onClick={sendTransaction}>Execute transaction</button><br /></>
+          <><h1>deadcaster</h1><button onClick={sendTransaction}>Execute transaction</button><br /></>
 
         ) : (
 
