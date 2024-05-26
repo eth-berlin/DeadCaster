@@ -39,7 +39,12 @@ function App() {
   }
 
   const fetchWarpCasterCasts = async (fid) => {
-    const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
+    const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.warpcast.com/v2/casts?fid=${fid}`, {
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
+    })
     const data = await response.json()
     return data
   }
@@ -84,7 +89,12 @@ function App() {
   }
 
   const usernameByFID = async (fid) => {
-    const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
+    const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.warpcast.com/v2/casts?fid=${fid}`, {
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
+    })
     const data = await response.json()
     let username = data.result.casts[0].author.username
 
@@ -186,7 +196,7 @@ function App() {
         {typeof window.ethereum !== "undefined" ? (
           <>
 
-            <img src={logo} alt="Logo" width={"50%"} height={"50%"}/>
+            <img src={logo} alt="Logo" width={"50%"} height={"50%"} />
 
 
             {/* <input type="text" value={encrypted} onChange={e => setEncrypted(e.target.value)} placeholder="Enter encrypted text" /> */}
@@ -216,7 +226,7 @@ function App() {
                           setFID(fid.toString())
                         }}
                       >
-                        {fid.toString()},{" "}
+                        {fid.toString()}{" "}
                       </button>
                     </span>
                     <span className="text-xs mr-2 inline-block">
