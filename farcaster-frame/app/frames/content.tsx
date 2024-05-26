@@ -36,23 +36,35 @@ export default function getFramesContent(page: number, state?: State): any {
               },
             }}
           >
-            Setup your Deadcast
-          </Button>,
-          <Button action="link" target={`${protocolPrefix}${state?.url!}`}>
-            Keep me alive
+            Setup Deadcaster 👻
           </Button>,
           <Button
-            action="post"
-            target={{
-              query: {
-                pathname: "/",
-                pageIndex: String(5),
-                op: "more",
-              },
-            }}
+            action="link"
+            target={`${protocolPrefix}deadcaster-encrypt.vercel.app`}
           >
-            More
+            Cast encrypted 😎
           </Button>,
+          <Button action="link" target={`${protocolPrefix}${state?.url!}`}>
+            Keep me alive 🪦
+          </Button>,
+          <Button
+            action="link"
+            target={`${protocolPrefix}deadcaster-reveal.vercel.app`}
+          >
+            Reveal Deads 💰
+          </Button>,
+          // <Button
+          //   action="post"
+          //   target={{
+          //     query: {
+          //       pathname: "/",
+          //       pageIndex: String(5),
+          //       op: "more",
+          //     },
+          //   }}
+          // >
+          //   More
+          // </Button>,
         ],
         state,
       }
@@ -63,7 +75,7 @@ export default function getFramesContent(page: number, state?: State): any {
         imageOptions: {
           aspectRatio: "1:1",
         },
-        textInput: "Type in your secret here...",
+        textInput: "Type in your password here...",
         buttons: [
           <Button
             action="post"
@@ -75,7 +87,7 @@ export default function getFramesContent(page: number, state?: State): any {
               },
             }}
           >
-            Setup your secret
+            Next
           </Button>,
         ],
         state,
@@ -164,30 +176,6 @@ export default function getFramesContent(page: number, state?: State): any {
           <Button action="link" target={`${protocolPrefix}${state?.url!}`}>
             Activate Deadcaster
           </Button>,
-        ],
-        state,
-      }
-    }
-
-    case 5: {
-      return {
-        image: images[page]!,
-        imageOptions: {
-          aspectRatio: "1:1",
-        },
-        buttons: [
-          <Button
-            action="link"
-            target={`${protocolPrefix}deadcaster-reveal.vercel.app`}
-          >
-            Claim bounty, reveal secrets
-          </Button>,
-          <Button
-            action="link"
-            target={`${protocolPrefix}deadcaster-encrypt.vercel.app`}
-          >
-            Cast encrypted secret
-          </Button>,
           <Button
             action="post"
             target={{
@@ -200,6 +188,42 @@ export default function getFramesContent(page: number, state?: State): any {
           >
             Follow the Crew
           </Button>,
+        ],
+        state,
+      }
+    }
+
+    case 5: {
+      return {
+        image: images[page]!,
+        imageOptions: {
+          aspectRatio: "1:1",
+        },
+        buttons: [
+          // <Button
+          //   action="link"
+          //   target={`${protocolPrefix}deadcaster-reveal.vercel.app`}
+          // >
+          //   Reveal secrets 💰
+          // </Button>,
+          // <Button
+          //   action="link"
+          //   target={`${protocolPrefix}deadcaster-encrypt.vercel.app`}
+          // >
+          //   Cast encrypted 😎
+          // </Button>,
+          // <Button
+          //   action="post"
+          //   target={{
+          //     query: {
+          //       pathname: "/",
+          //       pageIndex: String(-1),
+          //       op: "follow",
+          //     },
+          //   }}
+          // >
+          //   Follow the Crew
+          // </Button>,
         ],
         state,
       }
