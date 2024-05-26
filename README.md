@@ -1,4 +1,6 @@
 # deadcaster
+![deadcaster logo](https://i.imgur.com/8HQSADp.png)
+
 
 ## Requirements
 
