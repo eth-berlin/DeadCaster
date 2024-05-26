@@ -38,12 +38,6 @@ function App() {
     await window.ethereum.request({ method: "eth_requestAccounts" })
   }
 
-  const decryptText = () => {
-    const bytes = AES.decrypt(encrypted, secret)
-    const originalText = bytes.toString(Utf8)
-    setDecrypted(originalText)
-  }
-
   const fetchWarpCasterCasts = async (fid) => {
     const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
     const data = await response.json()
@@ -215,7 +209,15 @@ function App() {
                       Index: {i},{" "}
                     </span>
                     <span className="text-xs mr-2 inline-block">
-                      Fid: {fid.toString()},{" "}
+                      Fid:{" "}
+                      <button
+                        onClick={() => {
+                          usernameByFID(fid)
+                          setFID(fid.toString())
+                        }}
+                      >
+                        {fid.toString()},{" "}
+                      </button>
                     </span>
                     <span className="text-xs mr-2 inline-block">
                       Bounty: {ethers.formatUnits(bounty.toString())} ETH,{" "}
