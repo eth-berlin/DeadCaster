@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- An Ethereum wallet.
+- An EVM wallet like [Metamask](https://metamask.io/download/). 
 - Testnet tokens for Sapphire. [Faucet is here](https://faucet.testnet.oasis.io/)
 - A password and secrets Messages only to be revealed when you are dead.
 - [Add sapphire network to your wallet](https://chainlist.org/?testnets=true&search=oasis+sapphire+testnet)
