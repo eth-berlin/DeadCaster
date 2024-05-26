@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- An EVM wallet like [Metamask](https://metamask.io/download/). 
+- An EVM wallet like [Metamask](https://metamask.io/download/).
 - Testnet tokens for Sapphire. [Faucet is here](https://faucet.testnet.oasis.io/)
 - A password and secrets Messages only to be revealed when you are dead.
 - [Add sapphire network to your wallet](https://chainlist.org/?testnets=true&search=oasis+sapphire+testnet)
@@ -63,6 +63,6 @@ _Imagine a journalist in a hostile environment ensuring their critical findings 
 <img src="https://i.imgur.com/ScvHNLk.jpeg" alt="drawing" width="200"/>
 <img src="https://i.imgur.com/4gFMLMh.jpeg" alt="drawing" width="200"/>
 
-<img src="https://i.imgur.com/tQbho73.jpeg" alt="drawing" width="200"/>
-<img src="https://i.imgur.com/FYi3hxx.jpeg" alt="drawing" width="200"/>
 <img src="https://i.imgur.com/qCIcJF7.jpeg" alt="drawing" width="200"/>
+<img src="https://i.imgur.com/FYi3hxx.jpeg" alt="drawing" width="200"/>
+<img src="https://i.imgur.com/tQbho73.jpeg" alt="drawing" width="200"/>
