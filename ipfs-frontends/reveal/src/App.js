@@ -4,6 +4,8 @@ import Utf8 from "crypto-js/enc-utf8"
 import "./App.css"
 import { ethers } from "ethers"
 import DeadCaster from "./DeadCaster.json"
+import logo from './ethlogober.png';
+
 
 function App() {
   const [encrypted, setEncrypted] = useState("")
@@ -46,13 +48,6 @@ function App() {
     const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
     const data = await response.json()
     return data
-  }
-
-  const usernameByFID = async (fid) => {
-    const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
-    const data = await response.json()
-    let username = data.result.casts[0].author.username;
-    return username;
   }
 
   // const listenForSecretRevealedEvent = async () => {
@@ -196,7 +191,10 @@ function App() {
       <header className="App-header">
         {typeof window.ethereum !== "undefined" ? (
           <>
-            <h1>deadcaster</h1>
+
+            <img src={logo} alt="Logo" width={"50%"} height={"50%"}/>
+
+
             {/* <input type="text" value={encrypted} onChange={e => setEncrypted(e.target.value)} placeholder="Enter encrypted text" /> */}
             <button
               onClick={() => {

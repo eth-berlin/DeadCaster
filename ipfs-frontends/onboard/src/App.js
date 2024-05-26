@@ -2,6 +2,7 @@ import React from 'react';
 import { ethers } from 'ethers';
 import './App.css';
 import * as sapphire from '@oasisprotocol/sapphire-paratime';
+import logo from './ethlogober.png';
 
 
 function App() {
@@ -63,7 +64,9 @@ function App() {
       <header className="App-header">
         {(typeof window.ethereum !== 'undefined') ? (
 
-          <><h1>deadcaster</h1><button onClick={sendTransaction}>Execute transaction</button><br />
+          <>        <img src={logo} alt="Logo" width={"50%"} height={"50%"} />
+
+            <button onClick={sendTransaction}>Execute transaction</button><br />
             <p>need testnet tokens for Sapphire?</p>
             <button><a href="https://faucet.testnet.oasis.dev/">Faucet</a></button>
             <br />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import AES from 'crypto-js/aes';
+import logo from './ethlogober.png';
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>deadcaster</h1>
+        <img src={logo} alt="Logo" width={"50%"} height={"50%"} />
         <input type="text" value={text} onChange={e => setText(e.target.value)} placeholder="Enter your cast" />
         <input type="text" value={secret} onChange={e => setSecret(e.target.value)} placeholder="Enter your secret" />
         <button onClick={encryptText}>Encrypt</button>
