@@ -6,7 +6,7 @@ import { isMobile } from "react-device-detect"
 export const images = [
   "https://i.imgur.com/6Q8A9Tc.png",
   "https://i.imgur.com/vFm38ez.png",
-  "https://i.imgur.com/sY4OTeE.png",
+  "https://i.imgur.com/hhLuiUh.png",
   "https://i.imgur.com/xwNd28z.png",
   "https://i.imgur.com/l5TffK4.png",
   "https://i.imgur.com/SJINX7A.png",
@@ -107,11 +107,11 @@ export default function getFramesContent(page: number, state?: State): any {
               pathname: "/",
               query: {
                 pageIndex: String(page + 1),
-                op: "time_10_seconds",
+                op: "time_1_min",
               },
             }}
           >
-            10 seconds (Demo)
+            1m (Demo)
           </Button>,
           <Button
             action="post"

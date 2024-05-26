@@ -61,8 +61,7 @@ const frameHandler = frames(async (ctx: any) => {
   if (page === 3) {
     const state = {
       ...ctx.state,
-      longevity:
-        op === "time_10_seconds" ? 10 : op === "time_weekly" ? 604800 : 0,
+      longevity: op === "time_1_min" ? 60 : op === "time_weekly" ? 604800 : 0,
     }
 
     return getFramesContent(page, state)
