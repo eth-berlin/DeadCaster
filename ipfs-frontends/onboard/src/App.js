@@ -9,7 +9,7 @@ function App() {
     await window.ethereum.request({ method: 'eth_requestAccounts' });
   };
 
-  const contractAddress = '0x49C9370e6152F312aefEA19D55AE89f11ca30cf4';
+  const contractAddress = '0x069D53c961Af6A37cF14b2cC2667f20f1D8E4C98';
 
   const urlParams = new URLSearchParams(window.location.search);
   const value = urlParams.get('value');

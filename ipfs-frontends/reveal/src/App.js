@@ -15,12 +15,14 @@ function App() {
 
   const [castArray, setCastArray] = useState([])
 
+  const [username, setUsername] = useState("")
+
   const [metas, setMetas] = useState([])
 
   const url = window.location.href
   const urlWithoutHttps = url.replace("https://", "")
 
-  const contractAddress = "0x49C9370e6152F312aefEA19D55AE89f11ca30cf4"
+  const contractAddress = "0x069D53c961Af6A37cF14b2cC2667f20f1D8E4C98"
 
   // The ABI of the smart contract
   const contractABI = [
@@ -84,8 +86,24 @@ function App() {
           }
         }
       })
+
+      if (textArray.length === 0) {
+        textArray.push("Failed to decrypt text, correct secret?")
+      }
     }
     return textArray
+  }
+
+  const usernameByFID = async (fid) => {
+    const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
+    const data = await response.json()
+    let username = data.result.casts[0].author.username
+
+    console.log("username", username)
+
+    setUsername(username)
+
+    return username
   }
 
   // const revealSecretClaimBounty = async (secret) => {
@@ -113,11 +131,13 @@ function App() {
 
   const testgetText = async (secret, fid) => {
     fetchWarpCasterCasts(fid).then((data) => {
-      setCastJson(data)
       console.log(data)
+
+      setCastJson(data)
+
       getTextFromCasts(data, secret).then((texts) => {
         setCastArray(texts)
-        console.log(texts)
+        console.log("texts", texts[0])
       })
     })
   }
@@ -138,6 +158,39 @@ function App() {
     setMetas(metas)
   }
 
+  const revealSecret = async (index) => {
+    await requestAccount()
+
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    const signer = await provider.getSigner()
+
+    const contract = new ethers.Contract(
+      contractAddress,
+      DeadCaster.abi,
+      signer
+    )
+    await contract.revealSecret(index)
+
+    console.log("bounty claimed")
+  }
+
+  const revealSecretView = async (index) => {
+    await requestAccount()
+
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    const signer = await provider.getSigner()
+
+    const contract = new ethers.Contract(
+      contractAddress,
+      DeadCaster.abi,
+      signer
+    )
+    const secret = await contract.revealSecretView(index)
+
+    console.log("secret", ethers.toUtf8String(secret))
+    setSecret(ethers.toUtf8String(secret))
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -145,25 +198,6 @@ function App() {
           <>
             <h1>deadcaster</h1>
             {/* <input type="text" value={encrypted} onChange={e => setEncrypted(e.target.value)} placeholder="Enter encrypted text" /> */}
-            <input
-              type="text"
-              value={secret}
-              onChange={(e) => setSecret(e.target.value)}
-              placeholder="Enter secret"
-            />
-            <input
-              type="text"
-              value={fid}
-              onChange={(e) => setFID(e.target.value)}
-              placeholder="Enter FID"
-            />
-            <button
-              onClick={() => {
-                testgetText(secret, fid)
-              }}
-            >
-              Get decrypted casts
-            </button>
             <button
               onClick={() => {
                 getMetas()
@@ -173,27 +207,77 @@ function App() {
             </button>
 
             <ul>
-              {castArray.map((cast, index) => -(<li key={index}>{cast}</li>))}
-
               {metas.map((meta, i) => {
-                const [_creator, longevity, _scheme, fid, bounty, bountyPaid] =
+                const [_creator, _longevity, _scheme, fid, bounty, bountyPaid] =
                   meta
 
                 return (
                   <div key={`${fid.toString()}-${i}`}>
-                    <span className="text-xs">Fid: {fid.toString()}</span>
-                    <span className="text-xs">Index: {i}</span>
-                    <span className="text-xs">
-                      Bounty: {ethers.parseEther(bounty.toString())}
+                    <span className="text-xs mr-2 inline-block">
+                      Index: {i},{" "}
                     </span>
-                    <span className="text-xs">
-                      Bounty Claimed: {bountyPaid ? "Yes" : "No"}
+                    <span className="text-xs mr-2 inline-block">
+                      Fid: {fid.toString()},{" "}
                     </span>
-                    <span className="text-xs">
-                      Longevity: {longevity.toString()}
+                    <span className="text-xs mr-2 inline-block">
+                      Bounty: {ethers.formatUnits(bounty.toString())} ETH,{" "}
                     </span>
+                    <span className="text-xs mr-2 inline-block">
+                      Claimed: {bountyPaid ? "Yes" : "No"}{" "}
+                    </span>
+                    {/* <span className="text-xs">
+                      Longevity: {(parseInt(longevity.toString()) / 60).toFixed(2)} minutes
+                    </span> */}
+                    <button
+                      onClick={() =>
+                        bountyPaid ? revealSecretView(i) : revealSecret(i)
+                      }
+                      className="ml-4"
+                    >
+                      {bountyPaid ? "Reveal" : "Claim"}
+                    </button>
                   </div>
                 )
+              })}
+            </ul>
+
+            <input
+              type="text"
+              value={secret}
+              onChange={(e) => setSecret(e.target.value)}
+              placeholder="Enter secret"
+            />
+            <div>
+              <input
+                type="text"
+                value={fid}
+                onChange={(e) => setFID(e.target.value)}
+                placeholder="Enter FID"
+                className="inline-block"
+              />
+              <button
+                onClick={() => {
+                  usernameByFID(fid)
+                }}
+                className="m-4 inline-block"
+              >
+                Get Username by FID
+              </button>
+
+              <span>{username}</span>
+            </div>
+            <button
+              onClick={() => {
+                testgetText(secret, fid)
+              }}
+              className="mt-4 inline-block"
+            >
+              Get decrypted casts
+            </button>
+
+            <ul>
+              {castArray.map((cast, index) => {
+                return <li key={index}>{cast}</li>
               })}
             </ul>
           </>

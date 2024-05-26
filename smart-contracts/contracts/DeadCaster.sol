@@ -84,6 +84,17 @@ contract DeadCaster {
         return _secrets[index];
     }
 
+    function revealSecretView(
+        uint256 index
+    ) external view returns (bytes memory) {
+        require(index < _metas.length, "no such secret");
+        address creator = _metas[index].creator;
+        uint256 expiry = _lastSeen[creator] + _metas[index].longevity;
+        require(block.timestamp >= expiry, "not expired");
+
+        return _secrets[index];
+    }
+
     /// @notice Returns the time (in seconds since the epoch) at which the owner was last seen, or zero if never seen.
     function getLastSeen(address owner) external view returns (uint256) {
         return _lastSeen[owner];
