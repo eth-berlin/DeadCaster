@@ -204,7 +204,15 @@ function App() {
                       Index: {i},{" "}
                     </span>
                     <span className="text-xs mr-2 inline-block">
-                      Fid: {fid.toString()},{" "}
+                      Fid:{" "}
+                      <button
+                        onClick={() => {
+                          usernameByFID(fid)
+                          setFID(fid.toString())
+                        }}
+                      >
+                        {fid.toString()},{" "}
+                      </button>
                     </span>
                     <span className="text-xs mr-2 inline-block">
                       Bounty: {ethers.formatUnits(bounty.toString())} ETH,{" "}
