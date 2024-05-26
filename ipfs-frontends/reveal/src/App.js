@@ -46,6 +46,13 @@ function App() {
     return data
   }
 
+  const usernameByFID = async (fid) => {
+    const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
+    const data = await response.json()
+    let username = data.result.casts[0].author.username;
+    return username;
+  }
+
   // const listenForSecretRevealedEvent = async () => {
   //   // Initialize the provider
 
