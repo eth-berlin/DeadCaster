@@ -36,23 +36,10 @@ function App() {
     await window.ethereum.request({ method: "eth_requestAccounts" })
   }
 
-  const decryptText = () => {
-    const bytes = AES.decrypt(encrypted, secret)
-    const originalText = bytes.toString(Utf8)
-    setDecrypted(originalText)
-  }
-
   const fetchWarpCasterCasts = async (fid) => {
     const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
     const data = await response.json()
     return data
-  }
-
-  const usernameByFID = async (fid) => {
-    const response = await fetch(`https://api.warpcast.com/v2/casts?fid=${fid}`)
-    const data = await response.json()
-    let username = data.result.casts[0].author.username;
-    return username;
   }
 
   // const listenForSecretRevealedEvent = async () => {
